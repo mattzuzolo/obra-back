@@ -9,7 +9,7 @@ const { app } = require("./../server");
 const { User } = require("../models/user");
 const { Annotation } = require("../models/annotation");
 const { Artwork } = require("../models/artwork");
-
+//
 // let seedUsers = [{
 //     _id: new ObjectID,
 //     username: "firstUser",
@@ -20,12 +20,12 @@ const { Artwork } = require("../models/artwork");
 //     username: "secondUser",
 //     password: "secondPassword"
 //   }];
-
+//
 // beforeEach((done) => {
 //   User.remove({})
 //     .then(() => done()); //wipe all Users for testing
 // });
-
+//
 // describe("POST /users", () => {
 //
 //   it("should not create a todo with invalid body data", (done) => {
@@ -73,7 +73,7 @@ const { Artwork } = require("../models/artwork");
 //       });
 //   });
 // });
-
+//
 // describe("GET /users", () => {
 //   it("should get all users", (done) => {
 //     request(app)
@@ -86,7 +86,7 @@ const { Artwork } = require("../models/artwork");
 //       .end(done);
 //   });
 // });
-
+//
 // describe("GET /users/:id", () => {
 //   it("should return an individual user instance", (done) => {
 //     request(app)
@@ -115,13 +115,13 @@ const { Artwork } = require("../models/artwork");
 //       .end(done);
 //   });
 // })
-
-
-
-
-
-
-//LOCAL TESTS
+//
+//
+//
+//
+//
+//
+// LOCAL TESTS
 //
 // Seeds to test models/schema/relationship
 // const seedUser = [{
@@ -144,30 +144,30 @@ const { Artwork } = require("../models/artwork");
 // const seedArtwork = [{
 //     _id: new ObjectID(),
 //     title: "The Persistence of Memory",
-  //   artist: "Salvador Dalí",
-  //   medium: "Oil on canvas",
-  //   century: "20th Century",
-  //   culture: "Spanish",
-  //   url: "https://www.moma.org/learn/moma_learning/1168-2",
-  //   imageUrl: "https://www.moma.org/wp/moma_learning/wp-content/uploads/2012/07/dali-469x340.jpg",
-  //   apiId: "134",
-  // },{
-  //   _id: new ObjectID(),
-  //   title: "The Farm",
-  //   artist: "Joan Miró",
-  //   medium: "Oil on cavnas",
-  //   century: "20th Century",
-  //   culture: "Spanish",
-  //   url: "https://www.nga.gov/collection/art-object-page.69660.html",
-  //   imageUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/3/33/TheFarmMiro21to22.jpg/300px-TheFarmMiro21to22.jpg",
-  //   apiId: "254",
-  // },{
-  //   _id: new ObjectID(),
-  //   title: "Wanderer Above the Sea of Fog",
-  //   artist: "Caspar David Friedrich",
-  //   medium: "Oil on canvas",
-  //   century: "19th Century",
-  //   culture: "German",
+//     artist: "Salvador Dalí",
+//     medium: "Oil on canvas",
+//     century: "20th Century",
+//     culture: "Spanish",
+//     url: "https://www.moma.org/learn/moma_learning/1168-2",
+//     imageUrl: "https://www.moma.org/wp/moma_learning/wp-content/uploads/2012/07/dali-469x340.jpg",
+//     apiId: "134",
+//   },{
+//     _id: new ObjectID(),
+//     title: "The Farm",
+//     artist: "Joan Miró",
+//     medium: "Oil on cavnas",
+//     century: "20th Century",
+//     culture: "Spanish",
+//     url: "https://www.nga.gov/collection/art-object-page.69660.html",
+//     imageUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/3/33/TheFarmMiro21to22.jpg/300px-TheFarmMiro21to22.jpg",
+//     apiId: "254",
+//   },{
+//     _id: new ObjectID(),
+//     title: "Wanderer Above the Sea of Fog",
+//     artist: "Caspar David Friedrich",
+//     medium: "Oil on canvas",
+//     century: "19th Century",
+//     culture: "German",
 //     url: "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog",
 //     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg",
 //     apiId: "315",

@@ -5,7 +5,14 @@ mongoose.Promise = global.Promise;
 
 //Connect database
 //Configured to default to Heroku. Or run locally.
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/obra", { useNewUrlParser: true });
+
+
+if(process.env.NODE_ENV === "test"){
+  mongoose.connect("mongodb://localhost/obra_test", { useNewUrlParser: true });
+} else {
+  mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/obra", { useNewUrlParser: true });
+}
+
 
 //note: ^^ second param above prevents deprecation warning
 //{ useNewUrlParser: true }

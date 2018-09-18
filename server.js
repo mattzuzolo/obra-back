@@ -4,17 +4,21 @@ require('./config/config');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors")
-const { ObjectID } = require("mongodb");
+const { mongoose } = require("./db/mongoose");
+// const { ObjectID } = require("mongodb");
+const app = express();
+
+const routes = require("./routes/routes");
+
+
 
 //require local imports
-let { mongoose } = require("./db/mongoose");
 let { User } = require("./models/user");
-let { Annotation } = require("./models/annotation");
-let { Artwork } = require("./models/artwork");
+// let { Annotation } = require("./models/annotation");
+// let { Artwork } = require("./models/artwork");
 let { authenticate } = require("./middleware/authenticate");
 
 //Save express to app
-let app = express();
 
 //Assign port. Default to Heroku config or run 4000 locally
 const PORT = process.env.PORT || 4000;
@@ -23,65 +27,33 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(bodyParser.json());
 
-//Configure routes here:
+routes(app);
 
-//GET Users
-app.get("/users", (request, response) => {
-  //use find method to access all users
-  User.find({}).then((users) => {
-    response.send({users});
-  }, (error) => {
-    response.status(400).send(error);
-  });
-});
-//GET users by id
-app.get("/users/:id", (request, response) => {
-  let id = request.params.id;
-
-  if (!ObjectID.isValid(id)){
-    return response.status(404).send();
-  }
-
-  User.findById(id).then((user) => {
-    if(!user){
-      return response.status(404).send();
-    }
-
-    response.send({user});
-  }).catch((error) => {
-    response.status(400).send();
-  });
+app.use((error, request, response, next) => {
+  response.status(422).send({ error: error.message });
 });
 
-app.get("/current", (request, response) => {
-  let token = request.get("x-auth")
-  //
-  // if (!ObjectID.isValid(id)){
-  //   return response.status(404).send();
-  // }
 
-  User.findByToken(token).then((user) => {
-    if(!user){
-      return response.status(404).send();
-    }
-    response.send({user});
-  }).catch((error) => {
-    // response.status(400).send();
-  });
-});
-//POST Users
-// app.post("/users", (request, response) => {
-//   let user = new User({
-//     username: request.body.username,
-//     password: request.body.password,
-//   })
-//   //save to DB or deny entry
-//   user.save().then((doc) => {
-//     response.send(doc);
-//   }, (error) => {
-//     response.status(400).send(error);
-//   });
-// });
+//Listen on the chosen port
+app.listen(PORT, () => {
+  console.log(`Started on port ${PORT}.`);
+})
+
+module.exports = { app };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //GET Artwork
@@ -137,6 +109,16 @@ app.post("/artwork", (request, response) => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
 //GET annotations
 app.get("/annotations", (request, response) => {
   //use find method to access all users
@@ -161,7 +143,7 @@ app.get("/me/annotations", authenticate, (request, response) => {
     response.status(400).send(error);
   });
 });
-//comment
+
 //GET annotations by id
 app.get("/annotations/:id", (request, response) => {
   let id = request.params.id;
@@ -180,6 +162,7 @@ app.get("/annotations/:id", (request, response) => {
   });
 });
 
+
 //GET annotations by with artwork object
 app.get("/annotations-artwork", (request, response) => {
   Annotation.find({})
@@ -193,6 +176,16 @@ app.get("/annotations-artwork", (request, response) => {
     response.status(400).send();
   });
 });
+
+
+
+
+
+
+
+
+
+
 
 //GET annotations by with artwork object
 app.get("/annotations-user", (request, response) => {
@@ -232,7 +225,12 @@ app.post("/annotations", authenticate, (request, response) => {
     response.status(400).send(error);
   });
 });
-//
+
+
+
+
+
+
 //UPDATE annotation
 app.put("/annotations/:id", authenticate, (request, response) => {
   let id = request.params.id; //annotation id
@@ -285,66 +283,3 @@ app.delete("/annotations/:id", authenticate, (request, response) => {
     response.status(400).send();
   });
 });
-
-//AUTHENTICATION STUFF HERE!!!
-//POST to /Users
-app.post("/users", (request, response) => {
-
-  let body = (({ email, password }) => ({ email, password }))(request.body);
-
-  let user = new User(body);
-
-  user.save()
-    .then(() => {
-
-      return user.generateAuthToken();
-  }).then((token) => {
-    response.header("x-auth", token).send(user);
-
-  }).catch((event) => {
-
-    response.status(400).send(event)
-  })
-});
-
-
-app.get("/users/me", authenticate, (request, response) => {
-  response.send(request.user)
-});
-
-//Login user
-app.post("/users/login", (request, response) => {
-  let body = (({ email, password }) => ({ email, password }))(request.body);
-
-  User.findByCredentials(body.email, body.password)
-    .then((user) => {
-      return user.generateAuthToken().then((token) => {
-        let userWithToken = Object.assign({}, user, {"token": token})
-        // console.log("ABOUT TO SEND userWithToken", userWithToken)
-        // response.header("x-auth", token).send(user);
-        response.send(userWithToken)
-      });
-    }).catch((error) => {
-      response.status(400).send();
-    });
-})
-
-//Logout user
-app.delete("/users/me/token", authenticate, (request, response) => {
-  request.user.removeToken(request.token)
-    .then(() => {
-      response.status(200).send();
-    }), () => {
-      response.status(400).send();
-    }
-});
-
-
-
-
-//Listen on the chosen port
-app.listen(PORT, () => {
-  console.log(`Started on port ${PORT}.`);
-})
-
-module.exports = { app };
