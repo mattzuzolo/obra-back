@@ -109,13 +109,6 @@ app.get("/annotations-artwork", (request, response) => {
 
 
 
-
-
-
-
-
-
-
 //GET annotations by with artwork object
 app.get("/annotations-user", (request, response) => {
   Annotation.find({})

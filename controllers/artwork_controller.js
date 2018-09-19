@@ -36,12 +36,9 @@ module.exports = {
       primaryimageurl: request.body.primaryimageurl,
       id: request.body.id,
     });
-
     //save to DB or deny entry
-    artwork.save().then((doc) => {
-      response.send(doc);
-    }, (error) => {
-      response.status(400).send(error);
-    });
+    artwork.save()
+      .then((doc) => response.send(doc))
+      .catch(next);
   },
 };
