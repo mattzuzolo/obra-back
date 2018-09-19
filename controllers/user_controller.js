@@ -57,22 +57,18 @@ module.exports = {
 
     User.findByCredentials(body.email, body.password)
       .then((user) => {
+        // console.log("INSIDE FIND BY CREDENTIALS")
         return user.generateAuthToken().then((token) => {
           let userWithToken = Object.assign({}, user, {"token": token})
           // console.log("ABOUT TO SEND userWithToken", userWithToken)
           // response.header("x-auth", token).send(user);
+          // console.log("userWithToken", userWithToken)
+
           response.send(userWithToken)
         });
       }).catch((error) => {
         response.status(400).send();
       });
   },
-  logout(request,response, next){
-    request.user.removeToken(request.token)
-      .then(() => {
-        response.status(200).send();
-      }), () => {
-        response.status(400).send();
-      }
-  },
+
 };

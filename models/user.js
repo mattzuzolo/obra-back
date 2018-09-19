@@ -45,7 +45,7 @@ UserSchema.methods.toJSON = function(){
 
 //instance methods
 UserSchema.methods.generateAuthToken = function(){
-  console.log("INSIDER GENERATE AUTH METHOD")
+  // console.log("INSIDER GENERATE AUTH METHOD")
   let user = this;
   let access = "auth";
   let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString();
@@ -55,7 +55,7 @@ UserSchema.methods.generateAuthToken = function(){
   user.tokens = user.tokens.concat([{access,token}]);
   return user.save()
     .then(() => {
-      console.log("RETURN TOKEN HERE")
+      // console.log("RETURN TOKEN HERE")
 
       return token;
     });

@@ -1,4 +1,7 @@
 const UserController = require("../controllers/user_controller");
+const ArtworkController = require("../controllers/artwork_controller")
+// const AnnotationController = require("../controllers/annotation_controller")
+
 const { authenticate } = require("../middleware/authenticate");
 
 
@@ -10,20 +13,16 @@ module.exports = (app) => {
   app.get("/current", UserController.findIndividualByToken)
   app.post("/users", UserController.create);
   app.post("/users/login", UserController.login);
-  app.delete("/users/me/token", authenticate, UserController.logout);
+
+  //artwork endpoints
+  app.get("/artwork", ArtworkController.index);
+  app.get("/artwork/:id", ArtworkController.findArtworkById);
+  app.post("/artwork", ArtworkController.create);
+
 }
 
 
 
-
-
-// const ArtworkController = require("../controllers/artwork_controller")
-// const AnnotationController = require("../controllers/annotation_controller")
-
-  //artwork endpoints
-  // app.get("/artwork", ArtworkController.index);
-  // app.get("/artwork/:id", ArtworkController.findArtworkById);
-  // app.post("/artwork", ArtworkController.create);
 
 
   //annotation endpoints
