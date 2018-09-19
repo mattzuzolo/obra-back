@@ -64,4 +64,17 @@ describe("Artwork controller", () => {
     })
   })
 
+  it("GET to /artwork returns all artworks", (done) => {
+    Artwork.count().then((count) => {
+      request(app)
+        .get("/artwork")
+        .expect(200)
+        .expect((response) => {
+          expect(response.body.artwork[0].title).toBe(title)
+          expect(response.body.artwork.length).toBe(1);
+        })
+        .end(done);
+    })
+  })
+
 })

@@ -4,7 +4,7 @@ const { ObjectID } = require("mongodb");
 module.exports = {
   index(request, response, next){
     Artwork.find({})
-      .then(users => response.send({users}))
+      .then(artwork => response.send({artwork}))
       .catch(next);
   },
 
