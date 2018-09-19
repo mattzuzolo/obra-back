@@ -7,40 +7,32 @@ const Artwork = mongoose.model("artwork");
 
 describe("Artwork controller", () => {
 
-  //test data
-  let title = "Wanderer above the Sea of Fog"
-  let artist = "Caspar David Friedrich"
-  let medium = "Oil on canvas"
-  let century = "19th Century"
-  let culture = "German"
-  let url = "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog"
-  let primaryimageurl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg/600px-Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg"
-  let id = 12345
+  let sampleArtwork = {
+    title: "Wanderer above the Sea of Fog",
+    artist: "Caspar David Friedrich",
+    medium: "Oil on canvas",
+    century: "19th Century",
+    culture: "German",
+    url: "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog",
+    primaryimageurl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg/600px-Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg",
+    id: 12345,
+  }
 
   it("POST to /artwork creates a new artwork", (done) => {
     Artwork.count().then((count) => {
       request(app)
         .post("/artwork")
-        .send({
-          title,
-          artist,
-          medium,
-          century,
-          culture,
-          url,
-          primaryimageurl,
-          id,
-        })
+        .send(sampleArtwork)
         .expect(200)
         .expect((response) => {
-          expect(response.body.title).toBe(title)
-          expect(response.body.artist).toBe(artist)
-          expect(response.body.medium).toBe(medium)
-          expect(response.body.century).toBe(century)
-          expect(response.body.culture).toBe(culture)
-          expect(response.body.url).toBe(url)
-          expect(response.body.primaryimageurl).toBe(primaryimageurl)
-          expect(response.body.id).toBe(id)
+          expect(response.body.title).toBe(sampleArtwork.title)
+          expect(response.body.artist).toBe(sampleArtwork.artist)
+          expect(response.body.medium).toBe(sampleArtwork.medium)
+          expect(response.body.century).toBe(sampleArtwork.century)
+          expect(response.body.culture).toBe(sampleArtwork.culture)
+          expect(response.body.url).toBe(sampleArtwork.url)
+          expect(response.body.primaryimageurl).toBe(sampleArtwork.primaryimageurl)
+          expect(response.body.id).toBe(sampleArtwork.id)
         })
         .end((error, response) => {
           if(error){
@@ -48,14 +40,14 @@ describe("Artwork controller", () => {
           }
           Artwork.find().then((artwork) => {
             expect(artwork.length).toBe(1)
-            expect(artwork[0].title).toBe(title);
-            expect(artwork[0].artist).toBe(artist);
-            expect(artwork[0].medium).toBe(medium);
-            expect(artwork[0].century).toBe(century);
-            expect(artwork[0].culture).toBe(culture);
-            expect(artwork[0].url).toBe(url);
-            expect(artwork[0].primaryimageurl).toBe(primaryimageurl);
-            expect(artwork[0].id).toBe(id);
+            expect(artwork[0].title).toBe(sampleArtwork.title);
+            expect(artwork[0].artist).toBe(sampleArtwork.artist);
+            expect(artwork[0].medium).toBe(sampleArtwork.medium);
+            expect(artwork[0].century).toBe(sampleArtwork.century);
+            expect(artwork[0].culture).toBe(sampleArtwork.culture);
+            expect(artwork[0].url).toBe(sampleArtwork.url);
+            expect(artwork[0].primaryimageurl).toBe(sampleArtwork.primaryimageurl);
+            expect(artwork[0].id).toBe(sampleArtwork.id);
             done()
           })
           .catch(error => done(error));
@@ -64,13 +56,24 @@ describe("Artwork controller", () => {
     })
   })
 
+  it("GET to /artwork/:id returns a specific artwork by id", (done) => {
+    request(app)
+      .get(`/artwork/${sampleArtwork.id}`)
+      .expect(200)
+      .expect((response) => {
+        expect(response.body.artwork.id).toBe(sampleArtwork.id);
+      })
+      .end(done);
+  })
+
   it("GET to /artwork returns all artworks", (done) => {
     Artwork.count().then((count) => {
       request(app)
         .get("/artwork")
         .expect(200)
         .expect((response) => {
-          expect(response.body.artwork[0].title).toBe(title)
+          // console.log("response.body", response.body)
+          expect(response.body.artwork[0].title).toBe(sampleArtwork.title)
           expect(response.body.artwork.length).toBe(1);
         })
         .end(done);

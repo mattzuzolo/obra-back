@@ -54,7 +54,7 @@ describe("User controller", () => {
       })
   });
 
-  it("GET to /users/:id to find a specific user with by id", (done) => {
+  it("GET to /users/:id to find a specific user by _id", (done) => {
     request(app)
       .get(`/users/${createdUserId}`)
       .expect(200)

@@ -10,12 +10,8 @@ module.exports = {
 
   findArtworkById(request, response, next){
     let id = request.params.id;
-
-    if (!ObjectID.isValid(id)){
-      return response.status(404).send();
-    }
-
-    Artwork.findById(id)
+    //search db for external API id. Not Mongo _id.
+    Artwork.findOne({id})
       .then((artwork) => {
         if(!artwork){
           return response.status(404).send();
