@@ -48,16 +48,7 @@ module.exports = { app };
 
 
 
-//GET annotations
-app.get("/annotations", (request, response) => {
-  //use find method to access all users
 
-  Annotation.find({}).then((annotations) => {
-    response.send({annotations});
-  }, (error) => {
-    response.status(400).send(error);
-  });
-});
  ////
 app.get("/me/annotations", authenticate, (request, response) => {
   //use find method to access all users
@@ -73,23 +64,7 @@ app.get("/me/annotations", authenticate, (request, response) => {
   });
 });
 
-//GET annotations by id
-app.get("/annotations/:id", (request, response) => {
-  let id = request.params.id;
 
-  if (!ObjectID.isValid(id)){
-    return response.status(404).send();
-  }
-
-  Annotation.findById(id).then((annotation) => {
-    if(!annotation){
-      return response.status(404).send();
-    }
-    response.send({annotation});
-  }).catch((error) => {
-    response.status(400).send();
-  });
-});
 
 
 //GET annotations by with artwork object
