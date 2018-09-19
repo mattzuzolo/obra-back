@@ -57,14 +57,14 @@ module.exports = { app };
 
 
 //GET Artwork
-app.get("/artwork", (request, response) => {
-  //use find method to access all users
-  Artwork.find({}).then((artwork) => {
-    response.send({artwork});
-  }, (error) => {
-    response.status(400).send(error);
-  });
-});
+// app.get("/artwork", (request, response) => {
+//   //use find method to access all users
+//   Artwork.find({}).then((artwork) => {
+//     response.send({artwork});
+//   }, (error) => {
+//     response.status(400).send(error);
+//   });
+// });
 //Get Artwork by id
 app.get("/artwork/:id", (request, response) => {
 
