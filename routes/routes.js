@@ -22,11 +22,11 @@ module.exports = (app) => {
   //annotation endpoints
   app.get("/annotations", AnnotationController.index);
   app.get("/annotations/:id", AnnotationController.findAnnotationById);
-  // app.get("/me/annotations", AnnotationController.findLoggedInAnnotations)
-  // app.get("/annotations-artwork", AnnotationController.findAnnotationsWithArtwork);
-  // app.get("/annotations-user", AnnotationController.findAnnotationsWithUser);
-  // app.post("/annotations", authenticate, AnnotationController.create);
-  // app.put("/annotations/:id", authenticate AnnotationController.update);
-  // app.delete("/annotations/:id", authenticate AnnotationController.delete);
+  app.get("/annotations-user", AnnotationController.findAnnotationsWithUser);
+  app.get("/annotations-artwork", AnnotationController.findAnnotationsWithArtwork);
+  // app.get("/me/annotations", AnnotationController.findLoggedInAnnotationsWithUserAndArtwork)
+  app.post("/annotations", authenticate, AnnotationController.create);
+  app.put("/annotations/:id", authenticate, AnnotationController.update);
+  app.delete("/annotations/:id", authenticate, AnnotationController.delete);
 
 }

@@ -27,8 +27,8 @@ describe("User controller", () => {
             return done(error);
           }
           User.find().then((users) => {
-            expect(users.length).toBe(1);
-            expect(users[0].email).toBe(email)
+            expect(users.length).toBe(2);
+            expect(users[1].email).toBe(email)
             done();
           })
           .catch(error => done(error))
@@ -82,7 +82,7 @@ describe("User controller", () => {
         .get("/users")
         .expect(200)
         .expect((response) => {
-          expect(response.body.users.length).toBe(1);
+          expect(response.body.users.length).toBe(2);
         })
         .end(done);
     });

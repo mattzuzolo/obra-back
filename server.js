@@ -67,36 +67,7 @@ app.get("/me/annotations", authenticate, (request, response) => {
 
 
 
-//GET annotations by with artwork object
-app.get("/annotations-artwork", (request, response) => {
-  Annotation.find({})
-    .populate("artwork")
-    .then((annotation) => {
-    if(!annotation){
-      return response.status(404).send();
-    }
-    response.send({annotation});
-  }).catch((error) => {
-    response.status(400).send();
-  });
-});
 
-
-
-
-//GET annotations by with artwork object
-app.get("/annotations-user", (request, response) => {
-  Annotation.find({})
-    .populate("user")
-    .then((annotation) => {
-    if(!annotation){
-      return response.status(404).send();
-    }
-    response.send({annotation});
-  }).catch((error) => {
-    response.status(400).send();
-  });
-});
 
 
 //POST annotation

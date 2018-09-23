@@ -39,15 +39,15 @@ describe("Artwork controller", () => {
             return done(error);
           }
           Artwork.find().then((artwork) => {
-            expect(artwork.length).toBe(1)
-            expect(artwork[0].title).toBe(sampleArtwork.title);
-            expect(artwork[0].artist).toBe(sampleArtwork.artist);
-            expect(artwork[0].medium).toBe(sampleArtwork.medium);
-            expect(artwork[0].century).toBe(sampleArtwork.century);
-            expect(artwork[0].culture).toBe(sampleArtwork.culture);
-            expect(artwork[0].url).toBe(sampleArtwork.url);
-            expect(artwork[0].primaryimageurl).toBe(sampleArtwork.primaryimageurl);
-            expect(artwork[0].id).toBe(sampleArtwork.id);
+            expect(artwork.length).toBe(2)
+            expect(artwork[1].title).toBe(sampleArtwork.title);
+            expect(artwork[1].artist).toBe(sampleArtwork.artist);
+            expect(artwork[1].medium).toBe(sampleArtwork.medium);
+            expect(artwork[1].century).toBe(sampleArtwork.century);
+            expect(artwork[1].culture).toBe(sampleArtwork.culture);
+            expect(artwork[1].url).toBe(sampleArtwork.url);
+            expect(artwork[1].primaryimageurl).toBe(sampleArtwork.primaryimageurl);
+            expect(artwork[1].id).toBe(sampleArtwork.id);
             done()
           })
           .catch(error => done(error));
@@ -73,8 +73,8 @@ describe("Artwork controller", () => {
         .expect(200)
         .expect((response) => {
           // console.log("response.body", response.body)
-          expect(response.body.artwork[0].title).toBe(sampleArtwork.title)
-          expect(response.body.artwork.length).toBe(1);
+          expect(response.body.artwork[1].title).toBe(sampleArtwork.title)
+          expect(response.body.artwork.length).toBe(2);
         })
         .end(done);
     })
