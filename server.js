@@ -4,21 +4,11 @@ require('./config/config');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors")
-const { mongoose } = require("./db/mongoose");
-// const { ObjectID } = require("mongodb");
 const app = express();
 
+//require local files
+const { mongoose } = require("./db/mongoose");
 const routes = require("./routes/routes");
-
-
-
-//require local imports
-let { User } = require("./models/user");
-// let { Annotation } = require("./models/annotation");
-// let { Artwork } = require("./models/artwork");
-let { authenticate } = require("./middleware/authenticate");
-
-//Save express to app
 
 //Assign port. Default to Heroku config or run 4000 locally
 const PORT = process.env.PORT || 4000;
@@ -40,114 +30,3 @@ app.listen(PORT, () => {
 })
 
 module.exports = { app };
-
-
-
-
-
-
-
-
-
- ////
-app.get("/me/annotations", authenticate, (request, response) => {
-  //use find method to access all users
-  Annotation.find({
-    user: request.user._id
-  })
-  .populate("artwork")
-  .populate("user")
-  .then((annotations) => {
-    response.send({annotations});
-  }, (error) => {
-    response.status(400).send(error);
-  });
-});
-
-
-
-
-
-
-
-//POST annotation
-app.post("/annotations", authenticate, (request, response) => {
-  // console.log("Request at /annotations POST: ", request.body);
-  let annotation = new Annotation({
-    headline: request.body.headline,
-    content: request.body.content,
-    source: request.body.source,
-    xCoord: request.body.xCoord,
-    yCoord: request.body.yCoord,
-    artwork: request.body.artwork,
-    user: request.body.user,
-    // user: request.user._id,
-  });
-
-  // console.log("Request at /annotations POST: ", request.body);
-  // console.log(request.body);
-
-  annotation.save().then((doc) => {
-    response.send(doc);
-  }, (error) => {
-    response.status(400).send(error);
-  });
-});
-
-
-
-
-
-
-//UPDATE annotation
-app.put("/annotations/:id", authenticate, (request, response) => {
-  let id = request.params.id; //annotation id
-  let body = request.body;
-
-
-  if (!ObjectID.isValid(id)){
-    return response.status(404).send();
-  }
-
-  Annotation.findOneAndUpdate({_id: id}, request.body, {new: true})
-    .then((annotation) => {
-      if (!annotation) {
-        return response.status(404).send();
-      }
-
-      response.send({annotation})
-
-    }).catch((error) => {
-      response.send(400).send();
-    })
-});
-
-
-
-
-
-
-
-
-
-//DELETE annotation
-app.delete("/annotations/:id", authenticate, (request, response) => {
-  let id = request.params.id;
-
-  if (!ObjectID.isValid(id)){
-    return response.status(404).send();
-  }
-
-  Annotation.findOneAndRemove({
-    _id: id,
-    user: request.user._id,
-  }).then((annotation) => {
-    if (!annotation){
-
-      return response.status(404).send();
-    }
-    response.send(annotation);
-  }).catch((error) => {
-    response.status(400).send();
-  });
-});
