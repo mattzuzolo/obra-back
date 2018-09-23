@@ -104,7 +104,6 @@ module.exports = {
   },
 
   findLoggedInAnnotationsWithUserAndArtwork(request, response, next){
-    console.log("request", request)
     Annotation.find({ user: request.user._id })
       .populate("artwork")
       .populate("user")

@@ -24,7 +24,7 @@ module.exports = (app) => {
   app.get("/annotations/:id", AnnotationController.findAnnotationById);
   app.get("/annotations-user", AnnotationController.findAnnotationsWithUser);
   app.get("/annotations-artwork", AnnotationController.findAnnotationsWithArtwork);
-  // app.get("/me/annotations", AnnotationController.findLoggedInAnnotationsWithUserAndArtwork)
+  app.get("/me/annotations", authenticate, AnnotationController.findLoggedInAnnotationsWithUserAndArtwork)
   app.post("/annotations", authenticate, AnnotationController.create);
   app.put("/annotations/:id", authenticate, AnnotationController.update);
   app.delete("/annotations/:id", authenticate, AnnotationController.delete);
