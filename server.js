@@ -16,15 +16,12 @@ const PORT = process.env.PORT || 4000;
 //configure middleware:
 app.use(cors());
 app.use(bodyParser.json());
-
 routes(app);
-
 app.use((error, request, response, next) => {
   response.status(422).send({ error: error.message });
 });
 
-
-//Listen on the chosen port
+//Listen on the specified port
 app.listen(PORT, () => {
   console.log(`Started on port ${PORT}.`);
 })
