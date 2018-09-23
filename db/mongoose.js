@@ -6,7 +6,6 @@ mongoose.Promise = global.Promise;
 //Connect database
 //Configured to default to Heroku. Or run locally.
 
-
 if(process.env.NODE_ENV === "test"){
   mongoose.connect("mongodb://localhost/obra_test", { useNewUrlParser: true });
 } else {

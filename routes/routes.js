@@ -4,8 +4,6 @@ const AnnotationController = require("../controllers/annotation_controller")
 
 const { authenticate } = require("../middleware/authenticate");
 
-
-
 module.exports = (app) => {
   //users endpoints
   app.get("/users", UserController.index);
