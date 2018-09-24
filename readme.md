@@ -5,6 +5,7 @@ Annotate paintings and other fine arts on the web with Obra.
 This is the RESTful API back-end supporting the React-based front-end.
 
 [Visit the front-end repository here](https://github.com/mattzuzolo/obra)
+
 [See the live demo here](https://obra-annotations.herokuapp.com/home)
 
 ## Technology
