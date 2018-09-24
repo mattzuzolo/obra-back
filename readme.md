@@ -17,7 +17,7 @@ This is the RESTful API back-end supporting the React-based front-end.
 
 ### Installing
 
-To launch front-end
+To launch the API
 
 ```
 npm run start
