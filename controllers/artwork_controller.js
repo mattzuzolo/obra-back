@@ -2,7 +2,7 @@ const { Artwork } = require("../models/artwork");
 const { ObjectID } = require("mongodb");
 
 module.exports = {
-  
+
   index(request, response, next){
     Artwork.find({})
       .then(artwork => response.send({artwork}))
